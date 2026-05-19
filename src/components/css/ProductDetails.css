@@ -1,0 +1,20 @@
+.details {
+  white-space: pre-line;
+}
+
+.details-dd{
+    color: white;
+}
+
+.h2{
+    color: white;
+}
+
+.card-button {
+  background: #ffffff;
+  color: #DE4F75;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
