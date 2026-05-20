@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // CONNECT DB
-mongoose.connect("mongodb+srv://admin123:123@cluster0.astldvq.mongodb.net/tutti_beauty")
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
