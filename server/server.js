@@ -1,12 +1,12 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 import bcrypt from "bcrypt";
-import UserModel from "../models/UserModel.js";
+import User from "./Models/Usrs.js"
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
 
-const app = express();
+const app = express();   // ✅ THIS IS REQUIRED FIRST
 
 app.use(cors());
 app.use(express.json());
@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
-const User = mongoose.model("User", userSchema);
 
 // REGISTER API
 app.post("/api/register", async (req, res) => {
@@ -88,7 +87,7 @@ app.post("/api/login", async (req, res) => {
   try {
     const { user, password } = req.body;
 
-    const foundUser = await UserModel.findOne({ user });
+    const foundUser = await User.findOne({ user });
 
     if (!foundUser) {
       return res.status(400).json({ message: "User not found" });
