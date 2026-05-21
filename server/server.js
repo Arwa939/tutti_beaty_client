@@ -1,44 +1,36 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import bcrypt from "bcrypt";
-import User from "./Models/Usrs.js"
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-const app = express();   // ✅ THIS IS REQUIRED FIRST
+import User from "./models/User.js";
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// CONNECT DB
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
-
-// USER SCHEMA
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-});
+  .catch(err => console.log(err));
 
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-// REGISTER API
+// REGISTER
 app.post("/api/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // check if user exists
     const existUser = await User.findOne({ email });
     if (existUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -56,11 +48,12 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+// LOGIN (fixed)
 app.post("/api/login", async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ name });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -77,37 +70,7 @@ app.post("/api/login", async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-      },
-    });
-
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// LOGIN API مباشرة هنا
-app.post("/api/login", async (req, res) => {
-  try {
-    const { user, password } = req.body;
-
-    const foundUser = await User.findOne({ user });
-
-    if (!foundUser) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    const isMatch = await bcrypt.compare(password, foundUser.password);
-
-    if (!isMatch) {
-      return res.status(400).json({ message: "Wrong password" });
-    }
-
-    res.json({
-      message: "Login successful",
-      user: {
-        id: foundUser._id,
-        user: foundUser.user,
-        isAdmin: foundUser.isAdmin,
+        email: user.email,
       },
     });
 
