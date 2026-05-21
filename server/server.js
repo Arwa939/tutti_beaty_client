@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
 
 // REGISTER API
 app.post("/api/register", async (req, res) => {
