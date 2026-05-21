@@ -10,8 +10,10 @@ import User from "./models/User.js";
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "https://tutti-beaty-client-5.onrender.com",
+  credentials: true
+}));app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
