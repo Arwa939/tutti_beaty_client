@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import "../css/Login.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name, // username
+          password,
+        }),
+      });
 
-    // connect API later
+      const data = await res.json();
+
+      if (res.ok) {
+        navigate("/");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Server error");
+    }
   };
 
   return (
@@ -21,10 +43,10 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Username"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
 
@@ -38,6 +60,11 @@ function Login() {
 
           <button type="submit">Login</button>
         </form>
+
+        <p className="signup-text">
+          Don't have an account?{" "}
+          <Link to="/register">Sign up</Link>
+        </p>
       </div>
     </div>
   );

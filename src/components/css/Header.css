@@ -2,7 +2,7 @@
   height: 90px;
   width: 100%;
   padding: 0 25px;
-  background: white;
+  background: #DE4F75;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,4 +46,15 @@
 /* HOVER */
 .header nav a:hover {
   color: #b83c5f;
+}
+
+.right-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cart-icon {
+  font-size: 30px;
+  cursor: pointer;
 }

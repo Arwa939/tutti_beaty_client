@@ -1,6 +1,9 @@
 import React from "react";
 import "../css/Header.css";
 import logo from "../assets/logo.png";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+
 
 function Header() {
   return (
@@ -8,14 +11,21 @@ function Header() {
 
       {/* LEFT SIDE */}
       <div className="left">
-        <img src={logo} alt="Tutti Beauty Logo" className="logo"/>
+        <nav>
+        <a href="/">Home</a>
+        <a href="#">Products</a>
+        <a href="/login">Login</a>
+        </nav>
       </div>
 
       {/* RIGHT SIDE */}
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">Login</a>
+        <a href="#" className="cart-icon">
+          <FaShoppingCart />
+        </a>
+        <a href="#" className="cart-icon">
+          <FaUser />
+        </a>
       </nav>
 
     </header>
