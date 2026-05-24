@@ -11,7 +11,8 @@ import User from "./models/Usrs.js";
 const app = express();
 
 app.use(cors({
-  origin: "https://tutti-beaty-client-5.onrender.com",
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));app.use(express.json());
 
