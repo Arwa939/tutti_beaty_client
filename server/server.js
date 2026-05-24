@@ -6,7 +6,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import User from "./models/User.js";
+import User from "./models/Usrs.js";
 
 const app = express();
 
